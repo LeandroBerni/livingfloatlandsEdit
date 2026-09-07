@@ -33,7 +33,7 @@ mobs:register_mob("livingfloatlands:woollyrhino", {
 	jump = false,
         jump_height = 6,
 	stepheight = 2,
-        stay_near = {{"livingfloatlands:coldsteppe_shrub", "livingfloatlands:coldsteppe_grass", "livingfloatlands:coldsteppe_grass2", "livingfloatlands:coldsteppe_grass3", "livingfloatlands:coldsteppe_grass4"}, 5},
+        stay_near = {{"livingfloatlands:coldsteppe_shrub", "livingfloatlands:coldsteppe_grass", "livingfloatlands:coldsteppe_grass2", "livingfloatlands:coldsteppe_grass3", "livingfloatlands:coldsteppe_grass4", "default:grass_1", "default:dry_grass_1", "default:fern_1", "default:snow"}, 5},
 	drops = {
 		{name = "livingfloatlands:largemammalraw", chance = 1, min = 1, max = 1},
 	},
@@ -42,7 +42,7 @@ mobs:register_mob("livingfloatlands:woollyrhino", {
 	light_damage = 0,
 	fear_height = 3,
         knock_back = false,
-        pathfinding = true,
+        pathfinding = false,
 	animation = {
 		speed_normal = 50,
 		stand_start = 0,
@@ -76,23 +76,12 @@ mobs:register_mob("livingfloatlands:woollyrhino", {
 })
 
 
-if minetest.get_modpath("ethereal") then
-	spawn_on = {"ethereal:mushroom_dirt", "ethereal:crystal_dirt", "default:permafrost_with_moss", "default:dirt_with_snow", "default:snow"}
-end
-
-if not mobs.custom_spawn_livingfloatlands then
-mobs:spawn({
+livingfloatlands.spawn_mob({
 	name = "livingfloatlands:woollyrhino",
-	nodes = {"livingfloatlands:coldsteppe_litter"},
-	neighbors = {"livingfloatlands:coldsteppe_grass", "livingfloatlands:coldsteppe_grass2", "livingfloatlands:coldsteppe_grass3"},
-	min_light = 0,
-	interval = 60,
-	chance = 2000, -- 15000
-	active_object_count = 2,
-	min_height = 1000,
-	max_height = 31000,
+	nodes = livingfloatlands.habitats.cold,
+	chance = 18000,
+	active_object_count = 1,
 	day_toggle = true,
 })
-end
 
 mobs:register_egg("livingfloatlands:woollyrhino", S("Woolly Rhino"), "awoollyrhino.png")

@@ -28,7 +28,7 @@ mobs:register_mob("livingfloatlands:carnotaurus", {
 	run_velocity = 6,
         walk_chance = 20,
 	runaway = false,
-        stay_near = {{"livingfloatlands:paleojungle_litter_leaves", "livingfloatlands:paleojungle_smallpalm", "livingfloatlands:giantforest_grass3", "livingfloatlands:paleojungle_ferngrass"}, 6},
+        stay_near = {{"livingfloatlands:paleojungle_litter_leaves", "livingfloatlands:paleojungle_smallpalm", "livingfloatlands:giantforest_grass3", "livingfloatlands:paleojungle_ferngrass", "default:junglegrass", "default:fern_1", "default:grass_1"}, 6},
 	jump = false,
         jump_height = 6,
 	stepheight = 2,
@@ -40,7 +40,7 @@ mobs:register_mob("livingfloatlands:carnotaurus", {
 	lava_damage = 4,
 	light_damage = 0,
 	fear_height = 3,
-        pathfinding = true,
+        pathfinding = false,
 	animation = {
 		speed_normal = 30,
 		stand_start = 250,
@@ -79,24 +79,12 @@ mobs:register_mob("livingfloatlands:carnotaurus", {
 })
 
 
-if minetest.get_modpath("ethereal") then
-	spawn_on = {"ethereal:prairie_dirt", "ethereal:dry_dirt", "default:dry_dirt_with_dry_grass"}
-end
-
-if not mobs.custom_spawn_livingfloatlands then
-mobs:spawn({
+livingfloatlands.spawn_mob({
 	name = "livingfloatlands:carnotaurus",
-	nodes = {"livingfloatlands:paleojungle_litter"},
-	neighbors = {"livingfloatlands:paleojungle_smallpalm"},
-	min_light = 0,
-	interval = 60,
+	nodes = livingfloatlands.habitats.jungle,
+	chance = 22000,
 	active_object_count = 1,
-	chance = 2000, -- 15000
-	min_height = 1000,
-	max_height = 31000,
-
 })
-end
 
 mobs:register_egg("livingfloatlands:carnotaurus", ("Carnotaurus"), "acarnotaurus.png")
 

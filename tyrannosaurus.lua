@@ -39,8 +39,8 @@ mobs:register_mob("livingfloatlands:tyrannosaurus", {
 	light_damage = 0,
 	fear_height = 3,
         knock_back = false,
-        pathfinding = true,
-        stay_near = {{"livingfloatlands:paleojungle_litter_leaves", "livingfloatlands:paleojungle_smallpalm", "livingfloatlands:giantforest_grass3", "livingfloatlands:paleojungle_ferngrass"}, 6},
+        pathfinding = false,
+        stay_near = {{"livingfloatlands:paleojungle_litter_leaves", "livingfloatlands:paleojungle_smallpalm", "livingfloatlands:giantforest_grass3", "livingfloatlands:paleojungle_ferngrass", "default:junglegrass", "default:fern_1", "default:grass_1"}, 6},
 	animation = {
 		speed_normal = 30,
 		stand_start = 250,
@@ -76,23 +76,11 @@ mobs:register_mob("livingfloatlands:tyrannosaurus", {
 })
 
 
-if minetest.get_modpath("ethereal") then
-	spawn_on = {"ethereal:prairie_dirt", "ethereal:dry_dirt", "default:dry_dirt_with_dry_grass", "default:dirt_with_rainforest_litter", "default:sand"}
-end
-
-if not mobs.custom_spawn_livingfloatlands then
-mobs:spawn({
+livingfloatlands.spawn_mob({
 	name = "livingfloatlands:tyrannosaurus",
-	nodes = {"livingfloatlands:paleojungle_litter"},
-	neighbors = {"livingfloatlands:paleojungle_smallpalm"},
-	min_light = 0,
-	interval = 60,
+	nodes = livingfloatlands.habitats.jungle,
+	chance = 22000,
 	active_object_count = 1,
-	chance = 2000, -- 15000
-	min_height = 1000,
-	max_height = 31000,
-
 })
-end
 
 mobs:register_egg("livingfloatlands:tyrannosaurus", ("Tyrannosaurus"), "atyrannosaurus.png")

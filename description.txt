@@ -1,1 +1,1 @@
-Adds various prehistoric animals to your Floatland Zone, if you are using V7 Map Generator. The floating islands can appear at a height of 1280 nodes.
+Adds new prehistoric biomes alongside vanilla Luanti/Minetest biomes (does not replace them) and sparse prehistoric animals that appear in matching climates without flooding the world.

@@ -1,6 +1,4 @@
 local S = minetest.get_translator("livingfloatlands")
-local random = math.random
-
 mobs:register_mob("livingfloatlands:mammooth", {
 	type = "animal",
 	passive = false,
@@ -35,7 +33,7 @@ mobs:register_mob("livingfloatlands:mammooth", {
 	jump = false,
         jump_height = 6,
 	stepheight = 2,
-        stay_near = {{"livingfloatlands:coldsteppe_shrub", "livingfloatlands:coldsteppe_grass", "livingfloatlands:coldsteppe_grass2", "livingfloatlands:coldsteppe_grass3", "livingfloatlands:coldsteppe_grass4"}, 5},
+        stay_near = {{"livingfloatlands:coldsteppe_shrub", "livingfloatlands:coldsteppe_grass", "livingfloatlands:coldsteppe_grass2", "livingfloatlands:coldsteppe_grass3", "livingfloatlands:coldsteppe_grass4", "default:grass_1", "default:dry_grass_1", "default:fern_1", "default:snow"}, 5},
 	drops = {
 		{name = "livingfloatlands:largemammalraw", chance = 1, min = 1, max = 1},
 	},
@@ -43,7 +41,7 @@ mobs:register_mob("livingfloatlands:mammooth", {
 	lava_damage = 4,
 	light_damage = 0,
 	fear_height = 3,
-        pathfinding = true,
+        pathfinding = false,
 	animation = {
 		speed_normal = 70,
 		stand_start = 0,
@@ -77,53 +75,12 @@ mobs:register_mob("livingfloatlands:mammooth", {
 })
 
 
-if minetest.get_modpath("ethereal") then
-	spawn_on = {"ethereal:crystal_dirt", "ethereal:gray_dirt", "default:permafrost_with_moss", "default:dirt_with_snow", "default:snow"}
-end
-
-if not mobs.custom_spawn_livingfloatlands then
-mobs:spawn({
+livingfloatlands.spawn_mob({
 	name = "livingfloatlands:mammooth",
-	nodes = {"livingfloatlands:coldsteppe_litter"},
-	neighbors = {"livingfloatlands:coldsteppe_grass", "livingfloatlands:coldsteppe_grass2", "livingfloatlands:coldsteppe_grass3"},
-	min_light = 0,
-	interval = 60,
-	chance = 2000, -- 15000
-	active_object_count = 4,
-	min_height = 1000,
-	max_height = 31000,
+	nodes = livingfloatlands.habitats.cold,
+	chance = 18000,
+	active_object_count = 1,
 	day_toggle = true,
-
-		on_spawn = function(self, pos)
-
-			local nods = minetest.find_nodes_in_area_under_air(
-				{x = pos.x - 4, y = pos.y - 3, z = pos.z - 4},
-				{x = pos.x + 4, y = pos.y + 3, z = pos.z + 4},
-				{"livingfloatlands:coldsteppe_litter"})
-
-			if nods and #nods > 0 then
-
-				-- min herd of 4
-				local iter = math.min(#nods, 4)
-
--- print("--- mammooth at", minetest.pos_to_string(pos), iter)
-
-				for n = 1, iter do
-
-					local pos2 = nods[random(#nods)]
-					local kid = random(4) == 1 and true or nil
-
-					pos2.y = pos2.y + 2
-
-					if minetest.get_node(pos2).name == "air" then
-
-						mobs:add_mob(pos2, {
-							name = "livingfloatlands:mammooth", child = kid})
-					end
-				end
-			end
-		end
-	})
-end
+})
 
 mobs:register_egg("livingfloatlands:mammooth", S("Mammooth"), "amammooth.png")

@@ -29,7 +29,7 @@ mobs:register_mob("livingfloatlands:cavebear", {
         jump_height = 6,
 	stepheight = 3,
         knock_back = false,
-        stay_near = {{"livingfloatlands:coldsteppe_shrub", "livingfloatlands:coldsteppe_grass", "livingfloatlands:coldsteppe_grass2", "livingfloatlands:coldsteppe_grass3", "livingfloatlands:coldsteppe_grass4"}, 6},
+        stay_near = {{"livingfloatlands:coldsteppe_shrub", "livingfloatlands:coldsteppe_grass", "livingfloatlands:coldsteppe_grass2", "livingfloatlands:coldsteppe_grass3", "livingfloatlands:coldsteppe_grass4", "default:grass_1", "default:dry_grass_1", "default:fern_1", "default:snow"}, 6},
 	drops = {
 		{name = "mobs:meat_raw", chance = 1, min = 1, max = 1},
 	},
@@ -70,23 +70,11 @@ mobs:register_mob("livingfloatlands:cavebear", {
 })
 
 
-if minetest.get_modpath("ethereal") then
-	spawn_on = {"default:dirt_with_coniferous_litter"}
-end
-
-if not mobs.custom_spawn_livingfloatlands then
-mobs:spawn({
-	name = "livingfloatlands:smilodon",
-	nodes = {"livingfloatlands:coldsteppe_litter"},
-	neighbors = {"livingfloatlands:coldsteppe_shrub"},
-	min_light = 0,
-	interval = 60,
-	chance = 2000, -- 15000
+livingfloatlands.spawn_mob({
+	name = "livingfloatlands:cavebear",
+	nodes = livingfloatlands.habitats.cold,
+	chance = 18000,
 	active_object_count = 1,
-	min_height = 1000,
-	max_height = 31000,
-
 })
-end
 
 mobs:register_egg("livingfloatlands:cavebear", S("Cave Bear"), "acavebear.png")

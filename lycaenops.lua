@@ -28,7 +28,7 @@ mobs:register_mob("livingfloatlands:lycaenops", {
 	jump = false,
         jump_height = 6,
 	stepheight = 2,
-        stay_near = {{"livingfloatlands:giantforest_grass", "livingfloatlands:giantforest_grass2", "livingfloatlands:giantforest_grass3"}, 6},
+        stay_near = {{"livingfloatlands:giantforest_grass", "livingfloatlands:giantforest_grass2", "livingfloatlands:giantforest_grass3", "default:grass_1", "default:fern_1", "default:junglegrass"}, 6},
 	drops = {
 		{name = "mobs:meat_raw", chance = 1, min = 1, max = 1},
 		{name = "mobs:leather", chance = 1, min = 0, max = 2},
@@ -69,22 +69,11 @@ mobs:register_mob("livingfloatlands:lycaenops", {
 })
 
 
-if minetest.get_modpath("ethereal") then
-	spawn_on = {"ethereal:gray_dirt", "dry:dry_dirt", "default:dirt_with_grass", "default:dry_dirt_with_dry_grass", "default:dirt_with_coniferous_litter"}
-end
-
-if not mobs.custom_spawn_livingfloatlands then
-mobs:spawn({
+livingfloatlands.spawn_mob({
 	name = "livingfloatlands:lycaenops",
-	nodes = {"livingfloatlands:giantforest_litter"},
-	neighbors = {"livingfloatlands:giantforest_grass", "livingfloatlands:giantforest_grass2", "livingfloatlands:giantforest_grass3"},
-	min_light = 0,
-	interval = 60,
-	chance = 2000, -- 15000
-	min_height = 1000,
-	max_height = 31000,
-
+	nodes = livingfloatlands.habitats.forest,
+	chance = 16000,
+	active_object_count = 1,
 })
-end
 
 mobs:register_egg("livingfloatlands:lycaenops", ("Lycaenops"), "alycaenops.png")

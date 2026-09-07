@@ -16,6 +16,7 @@ minetest.register_node("livingfloatlands:paleodesert_litter", {
 	}),
 })
 
+-- Extra climate biome (does not clear or overwrite vanilla Luanti biomes).
 minetest.register_biome({
     name = "livingfloatlands:paleodesert",
     node_top = "livingfloatlands:paleodesert_litter",
@@ -28,9 +29,10 @@ minetest.register_biome({
 		node_dungeon_alt = "default:desert_sandstone_brick",
 		node_dungeon_stair = "stairs:desert_sandstone_stair",
     y_max = 31000,
-    y_min = 1000,
-    heat_point = 96,
-    humidity_point = 15,
+    y_min = 6,
+    vertical_blend = 8,
+    heat_point = 100,
+    humidity_point = 5,
 })
 
 minetest.register_node("livingfloatlands:paleodesert_fern", {

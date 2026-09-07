@@ -34,7 +34,7 @@ stepheight = 2,
 	run_velocity = 3,
 	jump = true,
         jump_height = 6,
-        stay_near = {{"livingfloatlands:giantforest_grass", "livingfloatlands:giantforest_grass2", "livingfloatlands:giantforest_grass3"}, 5},
+        stay_near = {{"livingfloatlands:giantforest_grass", "livingfloatlands:giantforest_grass2", "livingfloatlands:giantforest_grass3", "default:grass_1", "default:fern_1", "default:junglegrass"}, 5},
 	runaway = true,
         runaway_from = {"animalworld:bear", "animalworld:crocodile", "animalworld:tiger", "animalworld:spider", "animalworld:spidermale", "animalworld:shark", "animalworld:hyena", "animalworld:kobra", "animalworld:monitor", "animalworld:snowleopard", "animalworld:volverine", "livingfloatlands:deinotherium", "livingfloatlands:carnotaurus", "livingfloatlands:lycaenops", "livingfloatlands:smilodon", "livingfloatlands:tyrannosaurus", "livingfloatlands:velociraptor"},
 	drops = {
@@ -82,25 +82,13 @@ stepheight = 2,
 })
 
 
-if minetest.get_modpath("ethereal") then
-	spawn_on = {"ethereal:grove_dirt", "ethereal:bamboo_dirt", "default:dirt_with_rainforest_litter"}
-end
-
-if not mobs.custom_spawn_livingfloatlands then
-mobs:spawn({
+livingfloatlands.spawn_mob({
 	name = "livingfloatlands:gastornis",
-	nodes = {"livingfloatlands:giantforest_litter"},
-	neighbors = {"livingfloatlands:giantforest_paleoredwood_trunk", "livingfloatlands:giantforest_paleooak_trunk"},
-	min_light = 0,
-	interval = 60,
-	chance = 2000, -- 15000
-	active_object_count = 2,
-	min_height = 1000,
-	max_height = 31000,
+	nodes = livingfloatlands.habitats.forest,
+	chance = 15000,
+	active_object_count = 1,
 	day_toggle = true,
 })
-end
-
 
 mobs:register_egg("livingfloatlands:gastornis", ("Gastornis"), "agastornis.png", 0)
 

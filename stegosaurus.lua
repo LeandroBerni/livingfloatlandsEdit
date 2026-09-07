@@ -1,6 +1,4 @@
 local S = minetest.get_translator("livingfloatlands")
-local random = math.random
-
 mobs:register_mob("livingfloatlands:stegosaurus", {
 	type = "animal",
 	passive = false,
@@ -34,7 +32,7 @@ mobs:register_mob("livingfloatlands:stegosaurus", {
         knock_back = false,
 	jump = false,
         jump_height = 6,
-        stay_near = {{"livingfloatlands:paleojungle_litter_leaves", "livingfloatlands:paleojungle_smallpalm", "livingfloatlands:giantforest_grass3", "livingfloatlands:paleojungle_ferngrass"}, 5},
+        stay_near = {{"livingfloatlands:paleojungle_litter_leaves", "livingfloatlands:paleojungle_smallpalm", "livingfloatlands:giantforest_grass3", "livingfloatlands:paleojungle_ferngrass", "default:junglegrass", "default:fern_1", "default:grass_1"}, 5},
 	stepheight = 2,
 	drops = {
 		{name = "livingfloatlands:ornithischiaraw", chance = 1, min = 1, max = 1},
@@ -43,7 +41,7 @@ mobs:register_mob("livingfloatlands:stegosaurus", {
 	lava_damage = 4,
 	light_damage = 0,
 	fear_height = 3,
-        pathfinding = true,
+        pathfinding = false,
 	animation = {
 		speed_normal = 25,
 		stand_start = 0,
@@ -76,52 +74,12 @@ mobs:register_mob("livingfloatlands:stegosaurus", {
 })
 
 
-if minetest.get_modpath("ethereal") then
-	spawn_on = {"ethereal:prairie_dirt", "ethereal:grove_dirt", "default:dirt_with_coniferous_litter", "default:dirt_with_grass", "default:dirt_with_rainforest_litter"}
-end
-
-if not mobs.custom_spawn_livingfloatlands then
-mobs:spawn({
+livingfloatlands.spawn_mob({
 	name = "livingfloatlands:stegosaurus",
-	nodes = {"livingfloatlands:paleojungle_litter"},
-	neighbors = {"livingfloatlands:paleojungle_ferngrass"},
-	min_light = 0,
-	interval = 60,
-	active_object_count = 2,
-	chance = 2000, -- 15000
-	min_height = 1000,
-	max_height = 31000,
-
-		on_spawn = function(self, pos)
-
-			local nods = minetest.find_nodes_in_area_under_air(
-				{x = pos.x - 4, y = pos.y - 3, z = pos.z - 4},
-				{x = pos.x + 4, y = pos.y + 3, z = pos.z + 4},
-				{"livingfloatlands:paleojungle_litter"})
-
-			if nods and #nods > 0 then
-
-				-- min herd of 2
-				local iter = math.min(#nods, 2)
-
--- print("--- stegosaurus at", minetest.pos_to_string(pos), iter)
-
-				for n = 1, iter do
-
-					local pos2 = nods[random(#nods)]
-					local kid = random(4) == 1 and true or nil
-
-					pos2.y = pos2.y + 2
-
-					if minetest.get_node(pos2).name == "air" then
-
-						mobs:add_mob(pos2, {
-							name = "livingfloatlands:stegosaurus", child = kid})
-					end
-				end
-			end
-		end
-	})
-end
+	nodes = livingfloatlands.habitats.jungle,
+	chance = 18000,
+	active_object_count = 1,
+	day_toggle = true,
+})
 
 mobs:register_egg("livingfloatlands:stegosaurus", ("Stegosaurus"), "astegosaurus.png")

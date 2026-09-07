@@ -6,3 +6,4 @@ ethereal?
 farming?
 hunger_ng?
 bonemeal?
+livingdesert?

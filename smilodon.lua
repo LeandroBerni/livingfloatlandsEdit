@@ -28,7 +28,7 @@ mobs:register_mob("livingfloatlands:smilodon", {
 	jump = true,
         jump_height = 6,
 	stepheight = 2,
-        stay_near = {{"livingfloatlands:coldsteppe_shrub", "livingfloatlands:coldsteppe_grass", "livingfloatlands:coldsteppe_grass2", "livingfloatlands:coldsteppe_grass3", "livingfloatlands:coldsteppe_grass4"}, 6},
+        stay_near = {{"livingfloatlands:coldsteppe_shrub", "livingfloatlands:coldsteppe_grass", "livingfloatlands:coldsteppe_grass2", "livingfloatlands:coldsteppe_grass3", "livingfloatlands:coldsteppe_grass4", "default:grass_1", "default:dry_grass_1", "default:fern_1", "default:snow"}, 6},
 	drops = {
 		{name = "mobs:meat_raw", chance = 1, min = 1, max = 1},
 	},
@@ -66,23 +66,11 @@ mobs:register_mob("livingfloatlands:smilodon", {
 })
 
 
-if minetest.get_modpath("ethereal") then
-	spawn_on = {"ethereal:crystal_dirt", "ethereal:gray_dirt", "default:permafrost_with_moss", "default:dirt_with_snow", "default:snow"}
-end
-
-if not mobs.custom_spawn_livingfloatlands then
-mobs:spawn({
+livingfloatlands.spawn_mob({
 	name = "livingfloatlands:smilodon",
-	nodes = {"livingfloatlands:coldsteppe_litter"},
-	neighbors = {"livingfloatlands:coldsteppe_shrub", "livingfloatlands:coldsteppe_grass", "livingfloatlands:coldsteppe_grass2", "livingfloatlands:coldsteppe_grass3"},
-	min_light = 0,
-	interval = 60,
-	chance = 2000, -- 15000
+	nodes = livingfloatlands.habitats.cold,
+	chance = 22000,
 	active_object_count = 1,
-	min_height = 1000,
-	max_height = 31000,
-
 })
-end
 
 mobs:register_egg("livingfloatlands:smilodon", ("Smilodon"), "asmilodon.png")

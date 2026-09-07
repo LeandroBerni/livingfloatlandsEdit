@@ -5,6 +5,7 @@ local modpath = minetest.get_modpath(modname)
 local mg_name = minetest.get_mapgen_setting("mg_name")
 
 
+-- Extra climate biome (does not clear or overwrite vanilla Luanti biomes).
 minetest.register_biome({
     name = "livingfloatlands:coldgiantforest",
     node_top = "livingfloatlands:giantforest_litter",
@@ -17,9 +18,10 @@ minetest.register_biome({
 		node_dungeon_alt = "default:mossycobble",
 		node_dungeon_stair = "stairs:stair_cobble",
     y_max = 31000,
-    y_min = 1000,
-    heat_point = 47,
-    humidity_point = 66,
+    y_min = 6,
+    vertical_blend = 8,
+    heat_point = 30,
+    humidity_point = 95,
 })
 
 -- New giantforest paleo redwood tree

@@ -72,23 +72,13 @@ view_range = 10,
 })
 
 
-if minetest.get_modpath("ethereal") then
-	spawn_on = {"ethereal:grove_dirt", "ethereal:bamboo_dirt", "default:dirt_with_rainforest_litter", "default:dirt_with_grass", "default:sand"}
-end
-
-if not mobs.custom_spawn_livingfloatlands then
-mobs:spawn({
+livingfloatlands.spawn_mob({
 	name = "livingfloatlands:rhamphorhynchus",
-	nodes = {"livingfloatlands:giantforest_paleoredwood_trunk", "livingfloatlands:paleojungle_litter"},
-	min_light = 0,
-	interval = 60,
-	chance = 200, -- 15000
-	active_object_count = 2,
-	min_height = 1000,
-	max_height = 31000,
+	nodes = livingfloatlands.habitats.coast,
+	chance = 16000,
+	active_object_count = 1,
 	day_toggle = true,
 })
-end
 
 mobs:register_egg("livingfloatlands:rhamphorhynchus", ("Rhamphorhynchus"), "arhamphorhynchus.png")
 

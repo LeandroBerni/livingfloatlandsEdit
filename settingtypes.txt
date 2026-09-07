@@ -1,0 +1,2 @@
+# Living Floatlands never clears vanilla biomes, decorations or ores.
+# Extra prehistoric biomes are registered as additional climates only.

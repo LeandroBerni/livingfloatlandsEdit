@@ -16,6 +16,7 @@ minetest.register_node("livingfloatlands:coldsteppe_litter", {
 	}),
 })
 
+-- Extra climate biome (does not clear or overwrite vanilla Luanti biomes).
 minetest.register_biome({
     name = "livingfloatlands:coldsteppe",
     node_top = "livingfloatlands:coldsteppe_litter",
@@ -28,9 +29,10 @@ minetest.register_biome({
 		node_dungeon_alt = "default:mossycobble",
 		node_dungeon_stair = "stairs:stair_cobble",
     y_max = 31000,
-    y_min = 1000,
-    heat_point = 38,
-    humidity_point = 27,
+    y_min = 6,
+    vertical_blend = 8,
+    heat_point = 10,
+    humidity_point = 10,
 })
 
 minetest.register_node("livingfloatlands:coldsteppe_bulbouschervil_block", {
