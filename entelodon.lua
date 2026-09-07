@@ -32,7 +32,7 @@ mobs:register_mob("livingfloatlands:entelodon", {
 	stepheight = 2,
         stay_near = {{"livingfloatlands:giantforest_grass", "livingfloatlands:giantforest_grass2", "livingfloatlands:giantforest_grass3", "default:grass_1", "default:fern_1", "default:junglegrass"}, 5},
 	drops = {
-		{name = "livingfloatlands:largemammalraw", chance = 1, min = 1, max = 1},
+		{name = "livingfloatlands:largemammalraw", chance = 4000, min = 1, max = 1},
 	},
 	water_damage = 0,
 	lava_damage = 4,
@@ -77,8 +77,8 @@ mobs:register_mob("livingfloatlands:entelodon", {
 livingfloatlands.spawn_mob({
 	name = "livingfloatlands:entelodon",
 	nodes = livingfloatlands.habitats.forest,
-	chance = 16000,
-	active_object_count = 1,
+	chance = 4000,
+	active_object_count = 2,
 	day_toggle = true,
 })
 

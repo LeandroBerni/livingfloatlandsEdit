@@ -75,8 +75,8 @@ stepheight = 2,
 livingfloatlands.spawn_mob({
 	name = "livingfloatlands:oviraptor",
 	nodes = livingfloatlands.habitats.desert,
-	chance = 16000,
-	active_object_count = 1,
+	chance = 4000,
+	active_object_count = 2,
 	day_toggle = true,
 })
 

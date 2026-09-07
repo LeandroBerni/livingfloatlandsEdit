@@ -77,8 +77,8 @@ mobs:register_mob("livingfloatlands:stegosaurus", {
 livingfloatlands.spawn_mob({
 	name = "livingfloatlands:stegosaurus",
 	nodes = livingfloatlands.habitats.jungle,
-	chance = 18000,
-	active_object_count = 1,
+	chance = 4500,
+	active_object_count = 2,
 	day_toggle = true,
 })
 

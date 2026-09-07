@@ -38,7 +38,7 @@ stepheight = 2,
 	runaway = true,
         runaway_from = {"animalworld:bear", "animalworld:crocodile", "animalworld:tiger", "animalworld:spider", "animalworld:spidermale", "animalworld:shark", "animalworld:hyena", "animalworld:kobra", "animalworld:monitor", "animalworld:snowleopard", "animalworld:volverine", "livingfloatlands:deinotherium", "livingfloatlands:carnotaurus", "livingfloatlands:lycaenops", "livingfloatlands:smilodon", "livingfloatlands:tyrannosaurus", "livingfloatlands:velociraptor"},
 	drops = {
-		{name = "mobs:meat_raw", chance = 1, min = 1, max = 1},
+		{name = "mobs:meat_raw", chance = 3500, min = 1, max = 1},
 		{name = "livingfloatlands:dinosaur_feather", chance = 1, min = 0, max = 2},
 	},
 	water_damage = 1,
@@ -85,8 +85,8 @@ stepheight = 2,
 livingfloatlands.spawn_mob({
 	name = "livingfloatlands:gastornis",
 	nodes = livingfloatlands.habitats.forest,
-	chance = 15000,
-	active_object_count = 1,
+	chance = 3500,
+	active_object_count = 2,
 	day_toggle = true,
 })
 

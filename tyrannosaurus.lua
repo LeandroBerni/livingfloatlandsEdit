@@ -79,7 +79,7 @@ mobs:register_mob("livingfloatlands:tyrannosaurus", {
 livingfloatlands.spawn_mob({
 	name = "livingfloatlands:tyrannosaurus",
 	nodes = livingfloatlands.habitats.jungle,
-	chance = 22000,
+	chance = 7000,
 	active_object_count = 1,
 })
 

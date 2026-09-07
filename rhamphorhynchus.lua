@@ -75,8 +75,8 @@ view_range = 10,
 livingfloatlands.spawn_mob({
 	name = "livingfloatlands:rhamphorhynchus",
 	nodes = livingfloatlands.habitats.coast,
-	chance = 16000,
-	active_object_count = 1,
+	chance = 4000,
+	active_object_count = 2,
 	day_toggle = true,
 })
 

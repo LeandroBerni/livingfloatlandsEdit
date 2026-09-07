@@ -73,8 +73,8 @@ mobs:register_mob("livingfloatlands:gigantopithecus", {
 livingfloatlands.spawn_mob({
 	name = "livingfloatlands:gigantopithecus",
 	nodes = livingfloatlands.habitats.forest,
-	chance = 15000,
-	active_object_count = 1,
+	chance = 4000,
+	active_object_count = 2,
 	day_toggle = true,
 })
 

@@ -72,7 +72,7 @@ mobs:register_mob("livingfloatlands:wildhorse", {
 livingfloatlands.spawn_mob({
 	name = "livingfloatlands:wildhorse",
 	nodes = livingfloatlands.habitats.grassland,
-	chance = 15000,
+	chance = 3500,
 	active_object_count = 2,
 	day_toggle = true,
 })

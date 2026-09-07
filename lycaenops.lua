@@ -30,7 +30,7 @@ mobs:register_mob("livingfloatlands:lycaenops", {
 	stepheight = 2,
         stay_near = {{"livingfloatlands:giantforest_grass", "livingfloatlands:giantforest_grass2", "livingfloatlands:giantforest_grass3", "default:grass_1", "default:fern_1", "default:junglegrass"}, 6},
 	drops = {
-		{name = "mobs:meat_raw", chance = 1, min = 1, max = 1},
+		{name = "mobs:meat_raw", chance = 5000, min = 1, max = 1},
 		{name = "mobs:leather", chance = 1, min = 0, max = 2},
 	},
 	water_damage = 0,
@@ -72,8 +72,8 @@ mobs:register_mob("livingfloatlands:lycaenops", {
 livingfloatlands.spawn_mob({
 	name = "livingfloatlands:lycaenops",
 	nodes = livingfloatlands.habitats.forest,
-	chance = 16000,
-	active_object_count = 1,
+	chance = 5000,
+	active_object_count = 2,
 })
 
 mobs:register_egg("livingfloatlands:lycaenops", ("Lycaenops"), "alycaenops.png")

@@ -79,8 +79,8 @@ mobs:register_mob("livingfloatlands:woollyrhino", {
 livingfloatlands.spawn_mob({
 	name = "livingfloatlands:woollyrhino",
 	nodes = livingfloatlands.habitats.cold,
-	chance = 18000,
-	active_object_count = 1,
+	chance = 4500,
+	active_object_count = 2,
 	day_toggle = true,
 })
 

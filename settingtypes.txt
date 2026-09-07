@@ -1,2 +1,3 @@
 # Living Floatlands never clears vanilla biomes, decorations or ores.
 # Extra prehistoric biomes are registered as additional climates only.
+# Animals spawn on matching vanilla and prehistoric ground.

@@ -31,7 +31,7 @@ mobs:register_mob("livingfloatlands:cavebear", {
         knock_back = false,
         stay_near = {{"livingfloatlands:coldsteppe_shrub", "livingfloatlands:coldsteppe_grass", "livingfloatlands:coldsteppe_grass2", "livingfloatlands:coldsteppe_grass3", "livingfloatlands:coldsteppe_grass4", "default:grass_1", "default:dry_grass_1", "default:fern_1", "default:snow"}, 6},
 	drops = {
-		{name = "mobs:meat_raw", chance = 1, min = 1, max = 1},
+		{name = "mobs:meat_raw", chance = 5000, min = 1, max = 1},
 	},
 	water_damage = 0,
 	lava_damage = 4,
@@ -73,7 +73,7 @@ mobs:register_mob("livingfloatlands:cavebear", {
 livingfloatlands.spawn_mob({
 	name = "livingfloatlands:cavebear",
 	nodes = livingfloatlands.habitats.cold,
-	chance = 18000,
+	chance = 5000,
 	active_object_count = 1,
 })
 
