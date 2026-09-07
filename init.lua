@@ -86,6 +86,21 @@ livingfloatlands.habitats = {
 	},
 }
 
+-- Decorative ground that replaces the biome top node.
+local extra_ground = {
+	"livingfloatlands:giantforest_litter_walkway",
+	"livingfloatlands:giantforest_litter_with_moss",
+	"livingfloatlands:paleojungle_littler_dirt",
+	"livingfloatlands:paleojungle_littler_leaves",
+	"livingfloatlands:coldsteppe_bulbouschervil_block",
+	"default:dirt",
+}
+add_nodes(livingfloatlands.habitats.forest, extra_ground)
+add_nodes(livingfloatlands.habitats.jungle, extra_ground)
+add_nodes(livingfloatlands.habitats.grassland, extra_ground)
+add_nodes(livingfloatlands.habitats.cold, extra_ground)
+add_nodes(livingfloatlands.habitats.coast, extra_ground)
+
 if minetest.get_modpath("ethereal") then
 	add_nodes(livingfloatlands.habitats.cold, {
 		"ethereal:crystal_dirt",
@@ -147,6 +162,17 @@ local function remember_nodes(def)
 	end
 end
 
+-- Plants sit on top of dirt, so requiring "air" neighbors makes grassy biomes never spawn.
+local spawn_neighbors = {
+	"air",
+	"group:flora",
+	"group:grass",
+	"group:dry_grass",
+	"group:flower",
+	"group:plant",
+	"group:leaves",
+}
+
 minetest.register_on_mods_loaded(function()
 	if mobs.custom_spawn_livingfloatlands then
 		return
@@ -163,15 +189,18 @@ minetest.register_on_mods_loaded(function()
 				"default:dry_dirt_with_dry_grass",
 				"default:desert_sand",
 				"default:sand",
+				"group:soil",
+				"group:sand",
 			})
 		end
 		if #nodes > 0 then
 			def.nodes = nodes
+			def.neighbors = spawn_neighbors
 			def.min_light = 0
 			def.max_light = 15
-			def.interval = def.interval or 30
-			def.chance = def.chance or 4000
-			def.active_object_count = def.active_object_count or 2
+			def.interval = 15
+			def.chance = math.min(def.chance or 1200, 1200)
+			def.active_object_count = math.max(def.active_object_count or 4, 4)
 			def.min_height = def.min_height or 0
 			def.max_height = def.max_height or 31000
 			mobs:spawn(def)
@@ -180,9 +209,10 @@ minetest.register_on_mods_loaded(function()
 	end
 end)
 
--- Lightweight nearby spawn so animals actually show up while exploring.
--- ABM alone is easy to miss (rare rolls, 12-node no-spawn radius around the player).
+-- Nearby spawn: ABM is easy to miss. Keep a visible pack around each player.
 local nearby_timer = 0
+local MAX_NEAR = 10
+local SPAWN_TRIES = 8
 
 local function count_our_mobs(pos, radius)
 	local total = 0
@@ -195,17 +225,46 @@ local function count_our_mobs(pos, radius)
 	return total
 end
 
+local function is_open(name)
+	if name == "air" then
+		return true
+	end
+	local def = minetest.registered_nodes[name]
+	return def and not def.walkable
+end
+
 local function find_ground(x, z, y0)
-	for y = math.floor(y0 + 20), math.floor(y0 - 28), -1 do
+	for y = math.floor(y0 + 24), math.floor(y0 - 32), -1 do
 		local ground = {x = x, y = y, z = z}
-		local above = {x = x, y = y + 1, z = z}
+		local above_name = minetest.get_node({x = x, y = y + 1, z = z}).name
 		local n = minetest.get_node(ground)
-		local a = minetest.get_node(above)
 		local ndef = minetest.registered_nodes[n.name]
-		if ndef and ndef.walkable and a.name == "air" then
+		if ndef and ndef.walkable and is_open(above_name) then
 			return ground, n.name
 		end
 	end
+end
+
+local function pick_mob(nodename)
+	local choices = node_to_mobs[nodename]
+	if choices and #choices > 0 then
+		return choices[math.random(#choices)]
+	end
+	-- Any registered animal if the exact ground isn't mapped.
+	for _, list in pairs(node_to_mobs) do
+		if list[1] then
+			return list[math.random(#list)]
+		end
+	end
+end
+
+local function spawn_one(pos, name)
+	if minetest.is_protected(pos, "") then
+		return false
+	end
+	-- Bypass mobs_redo AOC so nearby fill-in actually happens.
+	local obj = minetest.add_entity(pos, name)
+	return obj ~= nil
 end
 
 minetest.register_globalstep(function(dtime)
@@ -213,29 +272,28 @@ minetest.register_globalstep(function(dtime)
 		return
 	end
 	nearby_timer = nearby_timer + dtime
-	if nearby_timer < 12 then
+	if nearby_timer < 3.5 then
 		return
 	end
 	nearby_timer = 0
 
 	for _, player in ipairs(minetest.get_connected_players()) do
 		local ppos = player:get_pos()
-		if ppos and count_our_mobs(ppos, 48) < 4 then
-			local ang = math.random() * math.pi * 2
-			local dist = math.random(18, 38)
-			local gx = ppos.x + math.cos(ang) * dist
-			local gz = ppos.z + math.sin(ang) * dist
-			local ground, nodename = find_ground(gx, gz, ppos.y)
-			if ground then
-				local choices = node_to_mobs[nodename]
-				if choices and #choices > 0 then
-					local name = choices[math.random(#choices)]
-					local spawnpos = {x = ground.x, y = ground.y + 1, z = ground.z}
-					if not minetest.is_protected(spawnpos, "") then
-						if mobs.add_mob then
-							mobs:add_mob(spawnpos, {name = name})
-						else
-							minetest.add_entity(spawnpos, name)
+		if ppos then
+			local have = count_our_mobs(ppos, 56)
+			local need = MAX_NEAR - have
+			if need > 0 then
+				for _ = 1, math.min(SPAWN_TRIES, need) do
+					local ang = math.random() * math.pi * 2
+					local dist = math.random(10, 28)
+					local gx = ppos.x + math.cos(ang) * dist
+					local gz = ppos.z + math.sin(ang) * dist
+					local ground, nodename = find_ground(gx, gz, ppos.y)
+					if ground then
+						local name = pick_mob(nodename)
+						if name then
+							local spawnpos = {x = ground.x, y = ground.y + 1, z = ground.z}
+							spawn_one(spawnpos, name)
 						end
 					end
 				end
