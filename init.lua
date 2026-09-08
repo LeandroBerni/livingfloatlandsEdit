@@ -210,10 +210,10 @@ minetest.register_on_mods_loaded(function()
 	end
 end)
 
--- Nearby spawn: ABM is easy to miss. Keep a visible pack around each player.
+-- Nearby fill-in: at most one animal at a time, and only if the area is not already busy.
 local nearby_timer = 0
-local MAX_NEAR = 10
-local SPAWN_TRIES = 8
+local MAX_OURS = 3
+local MAX_ALL_MOBS = 8
 
 local function count_our_mobs(pos, radius)
 	local total = 0
@@ -251,21 +251,6 @@ local function pick_mob(nodename)
 	if choices and #choices > 0 then
 		return choices[math.random(#choices)]
 	end
-	-- Any registered animal if the exact ground isn't mapped.
-	for _, list in pairs(node_to_mobs) do
-		if list[1] then
-			return list[math.random(#list)]
-		end
-	end
-end
-
-local function spawn_one(pos, name)
-	if minetest.is_protected(pos, "") then
-		return false
-	end
-	-- Bypass mobs_redo AOC so nearby fill-in actually happens.
-	local obj = minetest.add_entity(pos, name)
-	return obj ~= nil
 end
 
 minetest.register_globalstep(function(dtime)
@@ -273,7 +258,7 @@ minetest.register_globalstep(function(dtime)
 		return
 	end
 	nearby_timer = nearby_timer + dtime
-	if nearby_timer < 3.5 then
+	if nearby_timer < 22 then
 		return
 	end
 	nearby_timer = 0
@@ -281,21 +266,19 @@ minetest.register_globalstep(function(dtime)
 	for _, player in ipairs(minetest.get_connected_players()) do
 		local ppos = player:get_pos()
 		if ppos then
-			local have = count_our_mobs(ppos, 56)
-			local need = MAX_NEAR - have
-			if need > 0 then
-				for _ = 1, math.min(SPAWN_TRIES, need) do
-					local ang = math.random() * math.pi * 2
-					local dist = math.random(10, 28)
-					local gx = ppos.x + math.cos(ang) * dist
-					local gz = ppos.z + math.sin(ang) * dist
-					local ground, nodename = find_ground(gx, gz, ppos.y)
-					if ground then
-						local name = pick_mob(nodename)
-						if name then
-							local spawnpos = {x = ground.x, y = ground.y + 1, z = ground.z}
-							spawn_one(spawnpos, name)
-						end
+			local ours, all_mobs = count_mobs(ppos, 64)
+			if ours < MAX_OURS and all_mobs < MAX_ALL_MOBS then
+				local ang = math.random() * math.pi * 2
+				local dist = math.random(20, 40)
+				local ground, nodename = find_ground(
+					ppos.x + math.cos(ang) * dist,
+					ppos.z + math.sin(ang) * dist,
+					ppos.y)
+				local name = ground and pick_mob(nodename)
+				if name then
+					local spawnpos = {x = ground.x, y = ground.y + 1, z = ground.z}
+					if not minetest.is_protected(spawnpos, "") then
+						minetest.add_entity(spawnpos, name)
 					end
 				end
 			end
