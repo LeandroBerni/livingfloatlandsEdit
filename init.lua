@@ -198,9 +198,10 @@ minetest.register_on_mods_loaded(function()
 			def.neighbors = spawn_neighbors
 			def.min_light = 0
 			def.max_light = 15
-			def.interval = 15
-			def.chance = math.min(def.chance or 1200, 1200)
-			def.active_object_count = math.max(def.active_object_count or 4, 4)
+			-- Balanced with other animal mods: uncommon, not a swarm.
+			def.interval = 45
+			def.chance = math.max(def.chance or 5000, 4000)
+			def.active_object_count = math.min(def.active_object_count or 2, 2)
 			def.min_height = def.min_height or 0
 			def.max_height = def.max_height or 31000
 			mobs:spawn(def)
