@@ -35,7 +35,7 @@ mobs:register_mob("livingfloatlands:mammooth", {
 	stepheight = 2,
         stay_near = {{"livingfloatlands:coldsteppe_shrub", "livingfloatlands:coldsteppe_grass", "livingfloatlands:coldsteppe_grass2", "livingfloatlands:coldsteppe_grass3", "livingfloatlands:coldsteppe_grass4", "default:grass_1", "default:dry_grass_1", "default:fern_1", "default:snow"}, 5},
 	drops = {
-		{name = "livingfloatlands:largemammalraw", chance = 4500, min = 1, max = 1},
+		{name = "livingfloatlands:largemammalraw", chance = 1, min = 1, max = 1},
 	},
 	water_damage = 0,
 	lava_damage = 4,

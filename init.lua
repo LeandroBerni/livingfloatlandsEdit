@@ -9,6 +9,10 @@ local path = minetest.get_modpath(minetest.get_current_modname()) .. "/"
 local S = minetest.get_translator and minetest.get_translator("livingfloatlands") or
 		dofile(path .. "intllib.lua")
 
+if not mobs then
+	error("[livingfloatlands] needs the mobs_redo mod (mod name: mobs)")
+end
+
 mobs.intllib = S
 
 local input = io.open(path .. "spawn.lua", "r")
@@ -137,7 +141,7 @@ local spawn_neighbors = {
 }
 
 minetest.register_on_mods_loaded(function()
-	if mobs.custom_spawn_livingfloatlands then
+	if not mobs or not mobs.spawn or mobs.custom_spawn_livingfloatlands then
 		return
 	end
 
@@ -157,6 +161,16 @@ minetest.register_on_mods_loaded(function()
 		end
 	end
 end)
+
+-- Stairs/walls are optional. Dummy APIs so biome files never crash on load.
+if not minetest.get_modpath("stairs") then
+	stairs = stairs or {}
+	function stairs.register_stair_and_slab() end
+end
+if not minetest.get_modpath("walls") then
+	walls = walls or {}
+	function walls.register() end
+end
 
 -- Nodes/biomes first so ground exists, then animals.
 dofile(path .. "coldsteppe.lua")
@@ -190,7 +204,7 @@ dofile(path .. "crafting.lua")
 dofile(path .. "leafdecay.lua")
 dofile(path .. "hunger.lua")
 
-if mobs.custom_spawn_livingfloatlands then
+if mobs and mobs.custom_spawn_livingfloatlands then
 	dofile(path .. "spawn.lua")
 end
 

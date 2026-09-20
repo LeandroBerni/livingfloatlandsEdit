@@ -1,3 +1,7 @@
+if not default or not default.register_leafdecay then
+	return
+end
+
 default.register_leafdecay({
 	trunks = {"livingfloatlands:giantforest_paleoredwood_trunk"},
 	leaves = {"livingfloatlands:giantforest_paleoredwood_leaves"},
@@ -57,4 +61,3 @@ default.register_leafdecay({
 	leaves = {"livingfloatlands:paleojungle_paleopalm_leaves"},
 	radius = 3
 })
-
